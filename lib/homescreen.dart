@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:tik_tak_toe_game/Modelclass.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({Key? key}) : super(key: key);
@@ -10,58 +9,112 @@ class Homescreen extends StatefulWidget {
   State<Homescreen> createState() => _HomescreenState();
 }
 
+List signO = [
+  "O",
+  "O",
+  "O",
+  "O",
+  "O",
+  "O",
+  "O",
+  "O",
+  "O",
+];
+List signX = [
+  "X",
+  "X",
+  "X",
+  "X",
+  "X",
+  "X",
+  "X",
+  "X",
+  "X",
+];
+List signnull = [
+  " ",
+  " ",
+  " ",
+  " ",
+  " ",
+  " ",
+  " ",
+  " ",
+  " ",
+];
 
-Icon i1 = Icon(Icons.close,color: Colors.white,size: 50);
-Icon i2 = Icon(Icons.circle_outlined,color: Colors.white,size: 50);
-Icon? i;
-
-int rnd0to1 = 0;
-
-List<Modeldata> tiktak = [];
+List position = [];
 
 class _HomescreenState extends State<Homescreen> {
   @override
-
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Align(
-              alignment: Alignment.center,
-              child: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3), itemCount : 9,itemBuilder: (context, index) => InkWell(onTap: () {
-                    setState(() {
+        appBar: AppBar(
+          backgroundColor: Colors.cyan,
 
-                      for(int i=1; i<=9; i++)
-                        {
-                          var rnd = Random();
-                          rnd0to1 = rnd.nextInt(2);
-                        }
-                    });
-                  },child: boxUi(rnd0to1)),),
+          leading:
+              Icon(
+                Icons.all_inclusive,
+                size: 35,
+              ),
+
+          title: Text("tiK taK toE",style: TextStyle(fontSize: 25,letterSpacing: 2,fontWeight: FontWeight.w700),),
+
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    position.clear();
+                  });
+                },
+                  child: Icon(Icons.refresh,size: 30)),
             ),
+          ],
+        ),
+        body: Center(
+          child: GridView.builder(
+            padding: EdgeInsets.all(50),
+            gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            itemBuilder: (context, index) => InkWell(
+              onTap: () {
+                setState(() {
+
+                  signnull[index] = signX[index];
+                  position.add(index);
+
+
+                  var rnd = Random();
+                  int r = rnd.nextInt(8);
+                  print(r);
+
+                  signnull[r] = signO[r];
+
+                });
+              },
+                child: boxui(signnull[index])),
+            itemCount: signnull.length,
           ),
         ),
       ),
     );
   }
 
-  Widget boxUi(int rndP)
-  {
+  Widget boxui(String s) {
     return Container(
-      height: 50,
-      width: 50,
+      height: 90,
+      width: 90,
       decoration: BoxDecoration(
         color: Colors.cyan,
-        border: Border(bottom: BorderSide(color: Colors.white,width: 3),right: BorderSide(width: 3,color: Colors.white),),
+        border: Border(
+            right: BorderSide(color: Colors.white, width: 3),
+            bottom: BorderSide(color: Colors.white, width: 3)),
       ),
-      child: Text("$rndP"),
+      alignment: Alignment.center,
+      child: Text("$s", style: TextStyle(color: Colors.white, fontSize: 50)),
     );
   }
-
-
 }
