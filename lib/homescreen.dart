@@ -42,8 +42,12 @@ List signnull = [
   " ",
   " ",
 ];
+int i = 0;
+String x = " ";
 
-List position = [];
+List position = [2,5,6,8,3,1,4,0,7];
+
+
 
 class _HomescreenState extends State<Homescreen> {
   @override
@@ -67,37 +71,47 @@ class _HomescreenState extends State<Homescreen> {
               child: InkWell(
                 onTap: () {
                   setState(() {
-                    position.clear();
+
                   });
                 },
                   child: Icon(Icons.refresh,size: 30)),
             ),
           ],
         ),
-        body: Center(
-          child: GridView.builder(
-            padding: EdgeInsets.all(50),
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-            itemBuilder: (context, index) => InkWell(
-              onTap: () {
-                setState(() {
+        body: Column(
+          children: [
+            Center(
+              child: GridView.builder(
+                shrinkWrap: true,
+                padding: EdgeInsets.all(50),
+                gridDelegate:
+                    SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+                itemBuilder: (context, index) => InkWell(
+                  onTap: () {
+                    setState(() {
 
-                  signnull[index] = signX[index];
-                  position.add(index);
+                      signnull[index] = signX[index];
+                      print(index);
+                     // position.remove(index);
+
+                      signnull[position[index]] = signO[position[index]];
+                      print(position[index]);
+
+                      if((signnull[0] == signnull[1] && signnull[1] == signnull[2] ) )
+                        {
+                          x = "Winner";
+                        }
 
 
-                  var rnd = Random();
-                  int r = rnd.nextInt(8);
-                  print(r);
+                    });
+                  },
+                    child: boxui(signnull[index]),),
+                itemCount: signnull.length,
+              ),
+            ),
 
-                  signnull[r] = signO[r];
-
-                });
-              },
-                child: boxui(signnull[index])),
-            itemCount: signnull.length,
-          ),
+            Text("${x}",style: TextStyle(color: Colors.red,fontSize: 30)),
+          ],
         ),
       ),
     );
@@ -118,3 +132,4 @@ class _HomescreenState extends State<Homescreen> {
     );
   }
 }
+
