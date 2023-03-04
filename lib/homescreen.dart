@@ -101,6 +101,11 @@ class _HomescreenState extends State<Homescreen> {
                         {
                           x = "Winner";
                         }
+                      else if ((signnull[3] == signnull[4] && signnull[4] == signnull[5] ))
+                        {
+                          x = "Winner";
+                        }
+
 
 
                     });
